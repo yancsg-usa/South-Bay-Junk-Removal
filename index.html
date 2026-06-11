@@ -8,185 +8,337 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            navy: '#0B3D91',
-            body: '#1F2937',
-            muted: '#6B7280',
-            line: '#E5E7EB',
-            cta: '#16A34A',
-            ctaDark: '#15803D',
-            urgent: '#DC2626',
-            amber: '#FBBF24',
-            soft: '#EFF6FF',
-            sun: '#FFF7D6',
-            sky: '#DBEAFE',
-            mint: '#F0FDF4'
-          },
-          fontFamily: {
-            display: ['Plus Jakarta Sans', 'sans-serif'],
-            body: ['Inter', 'sans-serif']
-          },
-          boxShadow: {
-            card: '0 1px 3px rgba(0,0,0,0.08)',
-            cardHover: '0 4px 12px rgba(0,0,0,0.12)',
-            nav: '0 10px 30px rgba(15,43,76,0.10)'
-          }
-        }
-      }
-    };
-  </script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', sans-serif; color: #1F2937; background: #FFFFFF; }
     h1, h2, h3, .font-display { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0; }
+
+    /* Colors not in Tailwind 2 default palette */
+    .text-navy { color: #0B3D91; }
+    .bg-navy { background-color: #0B3D91; }
+    .text-cta { color: #16A34A; }
+    .bg-cta { background-color: #16A34A; }
+    .hover\:bg-ctaDark:hover { background-color: #15803D; }
+    .text-urgent { color: #DC2626; }
+    .text-muted { color: #6B7280; }
+    .text-body { color: #1F2937; }
+    .text-amber { color: #FBBF24; }
+    .bg-amber { background-color: #FBBF24; }
+    .border-navy { border-color: #0B3D91; }
+    .border-line { border-color: #E5E7EB; }
+    .border-cta { border-color: #16A34A; }
+    .bg-soft { background-color: #EFF6FF; }
+    .bg-sun { background-color: #FFF7D6; }
+    .bg-sky { background-color: #DBEAFE; }
+    .bg-mint { background-color: #F0FDF4; }
+    .text-line { color: #E5E7EB; }
+    .divide-line > * + * { border-top-color: #E5E7EB; }
+    .hover\:bg-navy:hover { background-color: #0B3D91; }
+    .hover\:text-white:hover { color: #ffffff; }
+    .hover\:text-cta:hover { color: #16A34A; }
+    .focus\:border-cta:focus { border-color: #16A34A; outline: none; }
+    .hover\:bg-mint:hover { background-color: #F0FDF4; }
+
+    /* Nav */
     .nav.scrolled { box-shadow: 0 10px 30px rgba(11,61,145,0.14); }
+
+    /* Layout helpers */
     .section-pad { padding: 48px 0; }
     @media (min-width: 768px) { .section-pad { padding: 80px 0; } }
     .container-pad { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
+
+    /* Button base */
     .btn { min-height: 44px; border-radius: 8px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: all .2s ease; }
+
+    /* Card base */
     .card { border: 1px solid #E5E7EB; border-radius: 12px; background: #FFFFFF; box-shadow: 0 1px 3px rgba(0,0,0,0.08); transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease, background-color .2s ease; }
     .card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.12); transform: translateY(-2px); border-color: #FBBF24; }
+
+    /* Hero gradient */
     .hero-color { background: linear-gradient(180deg, #EFF6FF 0%, #FFFFFF 64%, #FFF7D6 100%); }
+
+    /* Trust chip */
     .sun-chip { border: 1px solid #FDE68A; background: #FFF7D6; color: #0B3D91; }
+
+    /* Card accent borders */
     .blue-card { border-top: 4px solid #0B3D91; }
     .yellow-card { border-top: 4px solid #FBBF24; }
+
+    /* Step animation */
     .step-panel { animation: stepIn .28s ease both; }
     @keyframes stepIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Choice inputs (checkboxes/radios styled as cards) */
     .choice-input:checked + .choice-card { border-color: #16A34A; background: #F0FDF4; box-shadow: 0 0 0 1px #16A34A; }
+
+    /* FAQ accordion */
     .faq-answer { max-height: 0; overflow: hidden; transition: max-height .3s ease; }
     .faq-item.open .faq-answer { max-height: 240px; }
     .faq-icon { transition: transform .2s ease; }
     .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    /* Pricing scroll on mobile */
     .pricing-scroll { scrollbar-width: thin; scrollbar-color: #16A34A #F8FAFC; }
+
+    /* Shadow helpers */
+    .shadow-card { box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .shadow-cardHover { box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
+
+    /* Backdrop blur fallback */
+    .backdrop-blur { backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+    .bg-white\/95 { background-color: rgba(255,255,255,0.95); }
+
+    /* Grid helpers not in Tailwind 2 */
+    @media (min-width: 640px) {
+      .sm\:flex-row { flex-direction: row; }
+      .sm\:justify-center { justify-content: center; }
+      .sm\:w-auto { width: auto; }
+      .sm\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .sm\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .sm\:flex-row { flex-direction: row; }
+      .sm\:items-center { align-items: center; }
+      .sm\:grid-cols-2 { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .sm\:col-span-2 { grid-column: span 2 / span 2; }
+    }
+    @media (min-width: 768px) {
+      .md\:text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+      .md\:text-\[52px\] { font-size: 52px; line-height: 1.15; }
+      .md\:text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+      .md\:flex { display: flex; }
+      .md\:hidden { display: none; }
+      .md\:grid-cols-2 { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .md\:grid-cols-3 { grid-template-columns: repeat(3,minmax(0,1fr)); }
+      .md\:grid-cols-4 { grid-template-columns: repeat(4,minmax(0,1fr)); }
+      .md\:items-center { align-items: center; }
+      .md\:items-start { align-items: flex-start; }
+      .md\:order-last { order: 9999; }
+      .md\:sticky { position: sticky; }
+      .md\:top-28 { top: 7rem; }
+      .md\:flex-row { flex-direction: row; }
+      .md\:gap-5 { gap: 1.25rem; }
+      .md\:overflow-visible { overflow: visible; }
+      .md\:pb-0 { padding-bottom: 0; }
+      .md\:p-8 { padding: 2rem; }
+      .md\:block { display: block; }
+      .md\:col-span-2 { grid-column: span 2 / span 2; }
+    }
+    @media (min-width: 1024px) {
+      .lg\:grid-cols-4 { grid-template-columns: repeat(4,minmax(0,1fr)); }
+    }
+
+    /* min-width for pricing cards on mobile */
+    .min-w-\[260px\] { min-width: 260px; }
+
+    /* max-w helpers */
+    .max-w-\[760px\] { max-width: 760px; }
+    .max-w-\[860px\] { max-width: 860px; }
+    .max-w-\[1120px\] { max-width: 1120px; }
+
+    /* text sizes */
+    .text-\[32px\] { font-size: 32px; line-height: 1.2; }
+    .text-\[18px\] { font-size: 18px; }
+    .tracking-\[0\.12em\] { letter-spacing: 0.12em; }
+    .tracking-\[0\.08em\] { letter-spacing: 0.08em; }
+
+    /* border helpers */
+    .border-\[\#BBF7D0\] { border-color: #BBF7D0; }
+    .border-\[\#FDE68A\] { border-color: #FDE68A; }
+    .border-white\/10 { border-color: rgba(255,255,255,0.1); }
+
+    /* bg helpers */
+    .bg-\[\#9CA3AF\] { background-color: #9CA3AF; }
+
+    /* text helpers */
+    .text-\[\#4B5563\] { color: #4B5563; }
+    .text-\[\#9CA3AF\] { color: #9CA3AF; }
+    .text-\[\#D1D5DB\] { color: #D1D5DB; }
+
+    /* progress bar bg */
+    .bg-cta { background-color: #16A34A; }
+    .w-1\/3 { width: 33.333333%; }
+
+    /* sr-only */
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0; }
+
+    /* order */
+    .order-first { order: -9999; }
+
+    /* peer — not available in Tailwind 2, use direct CSS */
+    input[type="checkbox"].choice-input:checked ~ .choice-card,
+    input[type="radio"].choice-input:checked ~ .choice-card { border-color: #16A34A; background: #F0FDF4; box-shadow: 0 0 0 1px #16A34A; }
+
+    /* divide */
+    .divide-y > * + * { border-top-width: 1px; }
+
+    /* outline none */
+    .outline-none { outline: none; }
   </style>
 </head>
 <body>
-  <header id="top" class="nav fixed left-0 right-0 top-0 z-50 bg-white/95 backdrop-blur transition-shadow duration-200">
-    <div class="container-pad flex h-20 items-center justify-between gap-4">
-      <a href="#top" class="flex items-center gap-2 text-[18px] font-bold text-navy">
-        <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-amber text-xl shadow-card" aria-hidden="true">🗑️</span>
+  <header id="top" class="nav fixed left-0 right-0 top-0 z-50 bg-white\/95 backdrop-blur" style="transition: box-shadow 0.2s;">
+    <div class="container-pad flex items-center justify-between gap-4" style="height:80px;">
+      <a href="#top" class="flex items-center gap-2 text-navy" style="font-size:18px;font-weight:700;">
+        <span class="flex items-center justify-center rounded-lg bg-amber shadow-card" style="height:36px;width:36px;font-size:20px;" aria-hidden="true">🗑️</span>
         <span>South Bay Junk Removal</span>
       </a>
-      <nav class="hidden items-center gap-7 text-sm font-semibold text-navy md:flex" aria-label="Primary navigation">
-        <a class="hover:text-cta" href="#services">Services</a>
-        <a class="hover:text-cta" href="#pricing">Pricing</a>
-        <a class="hover:text-cta" href="#reviews">Reviews</a>
-        <a class="hover:text-cta" href="#areas">Areas</a>
-        <a class="hover:text-cta" href="#faq">FAQ</a>
+      <nav class="hidden items-center gap-7 md:flex" style="font-size:14px;font-weight:600;" aria-label="Primary navigation">
+        <a class="text-navy hover:text-cta" href="#services">Services</a>
+        <a class="text-navy hover:text-cta" href="#pricing">Pricing</a>
+        <a class="text-navy hover:text-cta" href="#reviews">Reviews</a>
+        <a class="text-navy hover:text-cta" href="#areas">Areas</a>
+        <a class="text-navy hover:text-cta" href="#faq">FAQ</a>
       </nav>
       <div class="hidden items-center gap-4 md:flex">
-        <a href="#quote" class="btn bg-cta px-5 text-white hover:bg-ctaDark">Get Free Quote</a>
-        <a href="tel:4243606135" class="font-bold text-urgent">📞 424-360-6135</a>
+        <a href="#quote" class="btn bg-cta px-5 text-white hover:bg-ctaDark" style="color:#fff;">Get Free Quote</a>
+        <a href="tel:4243606135" class="text-urgent font-bold">📞 424-360-6135</a>
       </div>
-      <button id="menuBtn" class="btn border border-line px-3 text-navy md:hidden" aria-label="Open menu" aria-expanded="false">
-        <span class="text-2xl leading-none">☰</span>
+      <button id="menuBtn" class="btn border border-line px-3 text-navy md:hidden" aria-label="Open menu" aria-expanded="false" style="display:flex;">
+        <span style="font-size:24px;line-height:1;">☰</span>
       </button>
     </div>
-    <div id="mobileMenu" class="hidden border-t border-line bg-white md:hidden">
-      <nav class="container-pad flex flex-col py-3 text-sm font-semibold text-navy">
+    <div id="mobileMenu" class="hidden border-t border-line bg-white">
+      <nav class="container-pad flex flex-col py-3 text-navy" style="font-size:14px;font-weight:600;">
         <a class="py-3" href="#services">Services</a>
         <a class="py-3" href="#pricing">Pricing</a>
         <a class="py-3" href="#reviews">Reviews</a>
         <a class="py-3" href="#areas">Areas</a>
         <a class="py-3" href="#faq">FAQ</a>
-        <a class="btn mt-2 bg-cta px-5 text-white hover:bg-ctaDark" href="#quote">Get Free Quote</a>
+        <a class="btn mt-2 bg-cta px-5 hover:bg-ctaDark" href="#quote" style="color:#fff;">Get Free Quote</a>
         <a class="py-4 text-center font-bold text-urgent" href="tel:4243606135">📞 424-360-6135</a>
       </nav>
     </div>
   </header>
 
-  <main class="pt-20">
+  <main style="padding-top:80px;">
+
+    <!-- HERO -->
     <section class="section-pad hero-color text-center">
       <div class="container-pad">
-        <p class="sun-chip mx-auto mb-5 inline-flex max-w-3xl rounded-full px-4 py-2 text-xs font-bold uppercase tracking-[0.12em]">🛡️ Licensed & Insured · Family Owned · Serving South Bay Since Day One</p>
-        <h1 class="mx-auto max-w-5xl text-[32px] font-bold leading-tight text-navy md:text-[52px]">South Bay's Most Trusted Junk Removal — Fast, Affordable & Stress-Free</h1>
-        <p class="mx-auto mt-5 max-w-3xl text-lg leading-8 text-[#4B5563] md:text-xl">Starting at $50. Same-day service available. We do all the heavy lifting — you just point and we haul.</p>
-        <div class="mx-auto mt-8 flex max-w-xl flex-col gap-3 sm:flex-row sm:justify-center">
-          <a href="#quote" class="btn w-full bg-cta px-7 text-white hover:bg-ctaDark sm:w-auto">Get My Free Quote</a>
-          <a href="sms:4243606135" class="btn w-full border border-navy px-7 text-navy hover:bg-navy hover:text-white sm:w-auto">📱 Text Us Photos</a>
+        <p class="sun-chip mx-auto mb-5 inline-flex max-w-3xl rounded-full px-4 py-2 text-navy" style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;">🛡️ Licensed &amp; Insured · Family Owned · Serving South Bay Since Day One</p>
+        <h1 class="mx-auto text-navy" style="max-width:900px;font-size:clamp(32px,5vw,52px);font-weight:800;line-height:1.15;font-family:'Plus Jakarta Sans',sans-serif;">South Bay's Most Trusted Junk Removal — Fast, Affordable &amp; Stress-Free</h1>
+        <p class="mx-auto mt-5" style="max-width:680px;font-size:1.125rem;line-height:1.8;color:#4B5563;">Starting at $50. Same-day service available. We do all the heavy lifting — you just point and we haul.</p>
+        <div class="mx-auto mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center" style="max-width:480px;">
+          <a href="#quote" class="btn bg-cta hover:bg-ctaDark w-full sm:w-auto px-7" style="color:#fff;">Get My Free Quote</a>
+          <a href="sms:4243606135" class="btn border border-navy text-navy hover:bg-navy hover:text-white w-full sm:w-auto px-7">📱 Text Us Photos</a>
         </div>
-        <div class="mx-auto mt-8 flex max-w-3xl flex-col items-center justify-center gap-3 rounded-[12px] border border-sky bg-white px-5 py-4 text-sm font-semibold text-navy shadow-card md:flex-row md:gap-5">
-          <span>⭐⭐⭐⭐⭐ <span class="text-body">5.0 · 17 Google Reviews</span></span>
+        <div class="mx-auto mt-8 flex flex-col items-center justify-center gap-3 rounded-xl border border-line bg-white px-5 py-4 shadow-card md:flex-row md:gap-5" style="max-width:680px;font-size:14px;font-weight:600;">
+          <span class="text-navy">⭐⭐⭐⭐⭐ <span style="color:#1F2937;">5.0 · 17 Google Reviews</span></span>
           <span class="hidden text-line md:block">|</span>
-          <span>✅ 100% Satisfaction</span>
+          <span class="text-navy">✅ 100% Satisfaction</span>
           <span class="hidden text-line md:block">|</span>
-          <span>⚡ Same-Day Available</span>
+          <span class="text-navy">⚡ Same-Day Available</span>
         </div>
       </div>
     </section>
 
+    <!-- VALUE BADGES -->
     <section class="py-8">
       <div class="container-pad grid grid-cols-2 gap-4 md:grid-cols-4">
         <article class="card yellow-card p-5">
-          <div class="text-3xl">💵</div>
-          <h3 class="mt-3 text-lg font-bold text-navy">From $50</h3>
-          <p class="mt-1 text-sm text-muted">Upfront pricing, no surprises</p>
+          <div style="font-size:2rem;">💵</div>
+          <h3 class="mt-3 text-navy" style="font-size:1.1rem;font-weight:700;">From $50</h3>
+          <p class="mt-1 text-muted" style="font-size:14px;">Upfront pricing, no surprises</p>
         </article>
         <article class="card blue-card p-5">
-          <div class="text-3xl">⚡</div>
-          <h3 class="mt-3 text-lg font-bold text-navy">Same-Day</h3>
-          <p class="mt-1 text-sm text-muted">Available 7 days a week</p>
+          <div style="font-size:2rem;">⚡</div>
+          <h3 class="mt-3 text-navy" style="font-size:1.1rem;font-weight:700;">Same-Day</h3>
+          <p class="mt-1 text-muted" style="font-size:14px;">Available 7 days a week</p>
         </article>
         <article class="card yellow-card p-5">
-          <div class="text-3xl">🛡️</div>
-          <h3 class="mt-3 text-lg font-bold text-navy">Fully Insured</h3>
-          <p class="mt-1 text-sm text-muted">Licensed & bonded</p>
+          <div style="font-size:2rem;">🛡️</div>
+          <h3 class="mt-3 text-navy" style="font-size:1.1rem;font-weight:700;">Fully Insured</h3>
+          <p class="mt-1 text-muted" style="font-size:14px;">Licensed &amp; bonded</p>
         </article>
         <article class="card blue-card p-5">
-          <div class="text-3xl">♻️</div>
-          <h3 class="mt-3 text-lg font-bold text-navy">Eco-Friendly</h3>
-          <p class="mt-1 text-sm text-muted">We recycle & donate</p>
+          <div style="font-size:2rem;">♻️</div>
+          <h3 class="mt-3 text-navy" style="font-size:1.1rem;font-weight:700;">Eco-Friendly</h3>
+          <p class="mt-1 text-muted" style="font-size:14px;">We recycle &amp; donate</p>
         </article>
       </div>
     </section>
 
+    <!-- PRICING -->
     <section id="pricing" class="section-pad bg-white">
       <div class="container-pad">
         <div class="mx-auto max-w-3xl text-center">
-          <h2 class="text-3xl font-bold text-navy md:text-4xl">Honest Pricing. No Hidden Fees.</h2>
-          <p class="mt-4 text-lg text-muted">You only pay for the truck space you use. Text us photos for an exact quote in minutes.</p>
+          <h2 class="text-navy" style="font-size:clamp(1.75rem,3vw,2.25rem);font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;">Honest Pricing. No Hidden Fees.</h2>
+          <p class="mt-4 text-muted" style="font-size:1.1rem;">You only pay for the truck space you use. Text us photos for an exact quote in minutes.</p>
         </div>
         <div class="pricing-scroll mt-10 flex gap-4 overflow-x-auto pb-4 md:grid md:grid-cols-4 md:overflow-visible md:pb-0">
-          <article class="card yellow-card min-w-[260px] p-6">
-            <p class="text-sm font-bold uppercase tracking-[0.08em] text-muted">Single item</p>
-            <h3 class="mt-3 text-3xl font-extrabold text-navy">$50+</h3>
-            <p class="mt-3 text-sm text-muted">Great for one mattress, chair, appliance, or small pickup.</p>
+          <article class="card yellow-card min-w-\[260px\] p-6" style="min-width:260px;">
+            <p class="text-muted" style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;">Single item</p>
+            <h3 class="mt-3 text-navy" style="font-size:1.875rem;font-weight:800;">$50+</h3>
+            <p class="mt-3 text-muted" style="font-size:14px;">Great for one mattress, chair, appliance, or small pickup.</p>
           </article>
-          <article class="card blue-card min-w-[260px] p-6">
-            <p class="text-sm font-bold uppercase tracking-[0.08em] text-muted">Small load</p>
-            <h3 class="mt-3 text-3xl font-extrabold text-navy">$120-$300</h3>
-            <p class="mt-3 text-sm text-muted">A few bulky items, partial room, or light garage cleanout.</p>
+          <article class="card blue-card p-6" style="min-width:260px;">
+            <p class="text-muted" style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;">Small load</p>
+            <h3 class="mt-3 text-navy" style="font-size:1.875rem;font-weight:800;">$120–$300</h3>
+            <p class="mt-3 text-muted" style="font-size:14px;">A few bulky items, partial room, or light garage cleanout.</p>
           </article>
-          <article class="card relative min-w-[260px] border-cta bg-sun p-6">
-            <span class="absolute right-4 top-4 rounded-full bg-amber px-3 py-1 text-xs font-bold text-white">Most Popular</span>
-            <p class="text-sm font-bold uppercase tracking-[0.08em] text-muted">Medium load</p>
-            <h3 class="mt-3 text-3xl font-extrabold text-navy">$250-$500</h3>
-            <p class="mt-3 text-sm text-muted">Full room, garage, move-out pile, or mixed household junk.</p>
+          <article class="card p-6 bg-sun" style="min-width:260px;position:relative;border-color:#16A34A;border-width:1px;">
+            <span style="position:absolute;right:16px;top:16px;background:#FBBF24;color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;">Most Popular</span>
+            <p class="text-muted" style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;">Medium load</p>
+            <h3 class="mt-3 text-navy" style="font-size:1.875rem;font-weight:800;">$250–$500</h3>
+            <p class="mt-3 text-muted" style="font-size:14px;">Full room, garage, move-out pile, or mixed household junk.</p>
           </article>
-          <article class="card blue-card min-w-[260px] p-6">
-            <p class="text-sm font-bold uppercase tracking-[0.08em] text-muted">Large load</p>
-            <h3 class="mt-3 text-3xl font-extrabold text-navy">$400-$800</h3>
-            <p class="mt-3 text-sm text-muted">Multiple rooms, estate cleanouts, or full truckload service.</p>
+          <article class="card blue-card p-6" style="min-width:260px;">
+            <p class="text-muted" style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;">Large load</p>
+            <h3 class="mt-3 text-navy" style="font-size:1.875rem;font-weight:800;">$400–$800</h3>
+            <p class="mt-3 text-muted" style="font-size:14px;">Multiple rooms, estate cleanouts, or full truckload service.</p>
+          </article>
+        </div>
+        <div class="mt-8 text-center">
+          <p style="font-size:15px;color:#6B7280;">Not sure how much you have? <a href="sms:4243606135" style="color:#16A34A;font-weight:700;">📱 Text us photos → 424-360-6135</a> and we'll quote you in minutes.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="section-pad bg-soft">
+      <div class="container-pad">
+        <div class="mx-auto max-w-3xl text-center">
+          <h2 class="text-navy" style="font-size:clamp(1.75rem,3vw,2.25rem);font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;">As Easy as Snap, Quote, Done.</h2>
+          <p class="mt-4 text-muted" style="font-size:1.1rem;">A cleaner space is four simple steps away.</p>
+        </div>
+        <div class="mt-10 grid gap-4 md:grid-cols-4">
+          <article class="card yellow-card p-6">
+            <div style="font-size:2rem;">📸</div>
+            <h3 class="mt-3 text-navy" style="font-weight:700;font-size:1.05rem;">Snap &amp; Send</h3>
+            <p class="mt-2 text-muted" style="font-size:14px;">Take a few photos of your junk and text them to 424-360-6135. Takes 30 seconds.</p>
+          </article>
+          <article class="card blue-card p-6">
+            <div style="font-size:2rem;">💬</div>
+            <h3 class="mt-3 text-navy" style="font-weight:700;font-size:1.05rem;">Get Your Quote</h3>
+            <p class="mt-2 text-muted" style="font-size:14px;">We reply fast with an honest, upfront price. No pressure, no hidden fees.</p>
+          </article>
+          <article class="card yellow-card p-6">
+            <div style="font-size:2rem;">📅</div>
+            <h3 class="mt-3 text-navy" style="font-weight:700;font-size:1.05rem;">Pick Your Time</h3>
+            <p class="mt-2 text-muted" style="font-size:14px;">Same-day, next-day, or whenever works for you. We work around your schedule.</p>
+          </article>
+          <article class="card blue-card p-6">
+            <div style="font-size:2rem;">✅</div>
+            <h3 class="mt-3 text-navy" style="font-weight:700;font-size:1.05rem;">We Haul &amp; Clean</h3>
+            <p class="mt-2 text-muted" style="font-size:14px;">Our crew lifts everything, loads the truck, and leaves your space spotless.</p>
           </article>
         </div>
       </div>
     </section>
 
+    <!-- QUOTE FORM -->
     <section id="quote" class="section-pad bg-white">
       <div class="container-pad grid gap-8 md:grid-cols-2 md:items-start">
-        <aside class="order-first rounded-[12px] border border-[#BBF7D0] bg-mint p-8 md:order-last md:sticky md:top-28">
-          <div class="flex h-full flex-col justify-center text-center">
-            <p class="text-sm font-bold uppercase tracking-[0.12em] text-cta">Prefer instant?</p>
-            <h2 class="mt-3 text-3xl font-bold text-navy">📱 Text Us Photos</h2>
-            <a href="sms:4243606135" class="btn mx-auto mt-5 bg-cta px-6 text-lg text-white hover:bg-ctaDark">424-360-6135</a>
-            <div class="my-7 border-t border-[#BBF7D0]"></div>
-            <p class="mx-auto max-w-sm text-muted">Snap a photo of your junk, text it to us, and we'll reply with a price in under 2 minutes.</p>
-            <div class="mx-auto mt-6 grid max-w-sm gap-3 text-left text-sm font-semibold text-navy">
+
+        <!-- SMS fast lane (shows first on mobile) -->
+        <aside class="order-first rounded-xl border bg-mint p-8 md:order-last md:sticky" style="border-color:#BBF7D0;top:7rem;">
+          <div class="flex flex-col justify-center text-center h-full">
+            <p class="text-cta" style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;">Prefer instant?</p>
+            <h2 class="mt-3 text-navy" style="font-size:1.875rem;font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;">📱 Text Us Photos</h2>
+            <a href="sms:4243606135" class="btn bg-cta hover:bg-ctaDark mx-auto mt-5 px-6" style="color:#fff;font-size:1.1rem;">424-360-6135</a>
+            <hr class="my-7" style="border-color:#BBF7D0;">
+            <p class="mx-auto text-muted" style="max-width:320px;">Snap a photo of your junk, text it to us, and we'll reply with a price in under 2 minutes.</p>
+            <div class="mx-auto mt-6 grid gap-3 text-left" style="max-width:280px;font-size:14px;font-weight:600;color:#0B3D91;">
               <span>✅ No commitment required</span>
               <span>✅ Honest upfront pricing</span>
               <span>✅ Reply in minutes, not hours</span>
@@ -194,250 +346,270 @@
           </div>
         </aside>
 
-        <div class="rounded-[12px] border border-line bg-white p-6 shadow-card md:p-8">
+        <!-- Multi-step form -->
+        <div class="card p-6 md:p-8">
           <div id="formWrap">
-            <h2 class="text-3xl font-bold text-navy">Get Your Free Quote</h2>
-            <p class="mt-2 text-muted">Answer 4 quick questions — we'll send your price in minutes.</p>
+            <h2 class="text-navy" style="font-size:1.875rem;font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;">Get Your Free Quote</h2>
+            <p class="mt-2 text-muted">Answer 3 quick questions — we'll send your price in minutes.</p>
             <div class="mt-7">
-              <div id="stepLabel" class="mb-2 text-sm font-bold text-navy">Step 1 of 3</div>
+              <div id="stepLabel" class="mb-2 text-navy" style="font-size:14px;font-weight:700;">Step 1 of 3</div>
               <div class="h-2 overflow-hidden rounded-full bg-soft">
-                <div id="progressBar" class="h-full w-1/3 bg-cta transition-all duration-300 ease-out"></div>
+                <div id="progressBar" style="height:100%;width:33.333%;background:#16A34A;transition:width .3s ease;"></div>
               </div>
             </div>
 
             <form id="quoteForm" class="mt-8">
+              <!-- STEP 1 -->
               <section class="step-panel" data-step="1">
-                <h3 class="text-2xl font-bold text-navy">What do you need removed?</h3>
-                <p class="mt-1 text-sm text-muted">Helps us estimate truck size.</p>
-                <label class="mt-6 block text-sm font-bold text-body">Select everything that applies:</label>
-                <div class="mt-3 grid gap-3 sm:grid-cols-2">
-                  <label><input class="choice-input peer sr-only item-choice" type="checkbox" value="Furniture"><span class="choice-card flex min-h-[44px] cursor-pointer items-center rounded-lg border border-line px-4 py-3 text-sm font-semibold">🛋️ Furniture</span></label>
-                  <label><input class="choice-input peer sr-only item-choice" type="checkbox" value="Appliances"><span class="choice-card flex min-h-[44px] cursor-pointer items-center rounded-lg border border-line px-4 py-3 text-sm font-semibold">🧊 Appliances</span></label>
-                  <label><input class="choice-input peer sr-only item-choice" type="checkbox" value="Garage Cleanout"><span class="choice-card flex min-h-[44px] cursor-pointer items-center rounded-lg border border-line px-4 py-3 text-sm font-semibold">🏠 Garage Cleanout</span></label>
-                  <label><input class="choice-input peer sr-only item-choice" type="checkbox" value="Yard Waste"><span class="choice-card flex min-h-[44px] cursor-pointer items-center rounded-lg border border-line px-4 py-3 text-sm font-semibold">🌿 Yard Waste</span></label>
-                  <label><input class="choice-input peer sr-only item-choice" type="checkbox" value="Mattress"><span class="choice-card flex min-h-[44px] cursor-pointer items-center rounded-lg border border-line px-4 py-3 text-sm font-semibold">🛏️ Mattress</span></label>
-                  <label><input class="choice-input peer sr-only item-choice" type="checkbox" value="Construction Debris"><span class="choice-card flex min-h-[44px] cursor-pointer items-center rounded-lg border border-line px-4 py-3 text-sm font-semibold">🔨 Construction Debris</span></label>
-                  <label><input class="choice-input peer sr-only item-choice" type="checkbox" value="Office Junk"><span class="choice-card flex min-h-[44px] cursor-pointer items-center rounded-lg border border-line px-4 py-3 text-sm font-semibold">💼 Office Junk</span></label>
-                  <label><input class="choice-input peer sr-only item-choice" type="checkbox" value="General Clutter"><span class="choice-card flex min-h-[44px] cursor-pointer items-center rounded-lg border border-line px-4 py-3 text-sm font-semibold">📦 General Clutter</span></label>
-                  <label><input class="choice-input peer sr-only item-choice" type="checkbox" value="Estate/Move-Out"><span class="choice-card flex min-h-[44px] cursor-pointer items-center rounded-lg border border-line px-4 py-3 text-sm font-semibold">🏡 Estate/Move-Out</span></label>
-                  <label><input class="choice-input peer sr-only item-choice" type="checkbox" value="Not Sure / Other"><span class="choice-card flex min-h-[44px] cursor-pointer items-center rounded-lg border border-line px-4 py-3 text-sm font-semibold">❓ Not Sure / Other</span></label>
+                <h3 class="text-navy" style="font-size:1.4rem;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;">What do you need removed?</h3>
+                <p class="mt-1 text-muted" style="font-size:14px;">Helps us estimate truck size.</p>
+                <label class="mt-6 block text-body" style="font-size:14px;font-weight:700;">Select everything that applies:</label>
+                <div class="mt-3 grid gap-3" style="grid-template-columns:repeat(2,1fr);">
+                  <label style="cursor:pointer;"><input class="choice-input sr-only item-choice" type="checkbox" value="Furniture"><span class="choice-card flex items-center rounded-lg border border-line px-4 py-3" style="font-size:14px;font-weight:600;min-height:44px;cursor:pointer;">🛋️ Furniture</span></label>
+                  <label style="cursor:pointer;"><input class="choice-input sr-only item-choice" type="checkbox" value="Appliances"><span class="choice-card flex items-center rounded-lg border border-line px-4 py-3" style="font-size:14px;font-weight:600;min-height:44px;cursor:pointer;">🧊 Appliances</span></label>
+                  <label style="cursor:pointer;"><input class="choice-input sr-only item-choice" type="checkbox" value="Garage Cleanout"><span class="choice-card flex items-center rounded-lg border border-line px-4 py-3" style="font-size:14px;font-weight:600;min-height:44px;cursor:pointer;">🏠 Garage Cleanout</span></label>
+                  <label style="cursor:pointer;"><input class="choice-input sr-only item-choice" type="checkbox" value="Yard Waste"><span class="choice-card flex items-center rounded-lg border border-line px-4 py-3" style="font-size:14px;font-weight:600;min-height:44px;cursor:pointer;">🌿 Yard Waste</span></label>
+                  <label style="cursor:pointer;"><input class="choice-input sr-only item-choice" type="checkbox" value="Mattress"><span class="choice-card flex items-center rounded-lg border border-line px-4 py-3" style="font-size:14px;font-weight:600;min-height:44px;cursor:pointer;">🛏️ Mattress</span></label>
+                  <label style="cursor:pointer;"><input class="choice-input sr-only item-choice" type="checkbox" value="Construction Debris"><span class="choice-card flex items-center rounded-lg border border-line px-4 py-3" style="font-size:14px;font-weight:600;min-height:44px;cursor:pointer;">🔨 Construction</span></label>
+                  <label style="cursor:pointer;"><input class="choice-input sr-only item-choice" type="checkbox" value="Office Junk"><span class="choice-card flex items-center rounded-lg border border-line px-4 py-3" style="font-size:14px;font-weight:600;min-height:44px;cursor:pointer;">💼 Office Junk</span></label>
+                  <label style="cursor:pointer;"><input class="choice-input sr-only item-choice" type="checkbox" value="General Clutter"><span class="choice-card flex items-center rounded-lg border border-line px-4 py-3" style="font-size:14px;font-weight:600;min-height:44px;cursor:pointer;">📦 General Clutter</span></label>
+                  <label style="cursor:pointer;"><input class="choice-input sr-only item-choice" type="checkbox" value="Estate/Move-Out"><span class="choice-card flex items-center rounded-lg border border-line px-4 py-3" style="font-size:14px;font-weight:600;min-height:44px;cursor:pointer;">🏡 Estate/Move-Out</span></label>
+                  <label style="cursor:pointer;"><input class="choice-input sr-only item-choice" type="checkbox" value="Not Sure"><span class="choice-card flex items-center rounded-lg border border-line px-4 py-3" style="font-size:14px;font-weight:600;min-height:44px;cursor:pointer;">❓ Not Sure / Other</span></label>
                 </div>
-                <p class="error mt-3 hidden text-sm font-semibold text-urgent">Please select at least one option.</p>
-                <button type="button" class="next-btn btn mt-6 w-full bg-cta px-5 text-white hover:bg-ctaDark">Next: How much do you have? →</button>
+                <p class="error mt-3 hidden text-urgent" style="font-size:14px;font-weight:600;">Please select at least one option.</p>
+                <button type="button" class="next-btn btn bg-cta hover:bg-ctaDark mt-6 w-full px-5" style="color:#fff;">Next: How much do you have? →</button>
               </section>
 
+              <!-- STEP 2 -->
               <section class="step-panel hidden" data-step="2">
-                <h3 class="text-2xl font-bold text-navy">How much do you have?</h3>
-                <p class="mt-1 text-sm text-muted">Helps us pre-qualify truck size and price range.</p>
-                <label class="mt-6 block text-sm font-bold text-body">Roughly how much junk needs to go?</label>
-                <div class="mt-3 grid gap-3 sm:grid-cols-2">
-                  <label><input class="choice-input peer sr-only volume-choice" name="volume" type="radio" value="Just a few items"><span class="choice-card block min-h-[120px] cursor-pointer rounded-lg border border-line p-4"><span class="text-3xl">🪑</span><span class="mt-2 block font-bold text-navy">Just a few items</span><span class="mt-1 block text-sm text-muted">1-3 pieces · est. $50-$180</span></span></label>
-                  <label><input class="choice-input peer sr-only volume-choice" name="volume" type="radio" value="About half a room"><span class="choice-card block min-h-[120px] cursor-pointer rounded-lg border border-line p-4"><span class="text-3xl">📦</span><span class="mt-2 block font-bold text-navy">About half a room</span><span class="mt-1 block text-sm text-muted">Small load · est. $120-$300</span></span></label>
-                  <label><input class="choice-input peer sr-only volume-choice" name="volume" type="radio" value="A full room or garage"><span class="choice-card block min-h-[120px] cursor-pointer rounded-lg border border-line p-4"><span class="text-3xl">🏠</span><span class="mt-2 block font-bold text-navy">A full room or garage</span><span class="mt-1 block text-sm text-muted">Medium load · est. $250-$500</span></span></label>
-                  <label><input class="choice-input peer sr-only volume-choice" name="volume" type="radio" value="Multiple rooms or more"><span class="choice-card block min-h-[120px] cursor-pointer rounded-lg border border-line p-4"><span class="text-3xl">🚛</span><span class="mt-2 block font-bold text-navy">Multiple rooms or more</span><span class="mt-1 block text-sm text-muted">Large load · est. $400-$800</span></span></label>
+                <h3 class="text-navy" style="font-size:1.4rem;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;">How much do you have?</h3>
+                <p class="mt-1 text-muted" style="font-size:14px;">Helps us pre-qualify truck size and price range.</p>
+                <label class="mt-6 block text-body" style="font-size:14px;font-weight:700;">Roughly how much junk needs to go?</label>
+                <div class="mt-3 grid gap-3" style="grid-template-columns:repeat(2,1fr);">
+                  <label style="cursor:pointer;"><input class="choice-input sr-only volume-choice" name="volume" type="radio" value="Just a few items"><span class="choice-card block rounded-lg border border-line p-4" style="min-height:110px;cursor:pointer;"><span style="font-size:2rem;">🪑</span><span class="block mt-2 text-navy" style="font-weight:700;">Just a few items</span><span class="block mt-1 text-muted" style="font-size:13px;">1–3 pieces · est. $50–$180</span></span></label>
+                  <label style="cursor:pointer;"><input class="choice-input sr-only volume-choice" name="volume" type="radio" value="About half a room"><span class="choice-card block rounded-lg border border-line p-4" style="min-height:110px;cursor:pointer;"><span style="font-size:2rem;">📦</span><span class="block mt-2 text-navy" style="font-weight:700;">About half a room</span><span class="block mt-1 text-muted" style="font-size:13px;">Small load · est. $120–$300</span></span></label>
+                  <label style="cursor:pointer;"><input class="choice-input sr-only volume-choice" name="volume" type="radio" value="A full room or garage"><span class="choice-card block rounded-lg border border-line p-4" style="min-height:110px;cursor:pointer;"><span style="font-size:2rem;">🏠</span><span class="block mt-2 text-navy" style="font-weight:700;">A full room or garage</span><span class="block mt-1 text-muted" style="font-size:13px;">Medium load · est. $250–$500</span></span></label>
+                  <label style="cursor:pointer;"><input class="choice-input sr-only volume-choice" name="volume" type="radio" value="Multiple rooms or more"><span class="choice-card block rounded-lg border border-line p-4" style="min-height:110px;cursor:pointer;"><span style="font-size:2rem;">🚛</span><span class="block mt-2 text-navy" style="font-weight:700;">Multiple rooms or more</span><span class="block mt-1 text-muted" style="font-size:13px;">Large load · est. $400–$800</span></span></label>
                 </div>
-                <p class="error mt-3 hidden text-sm font-semibold text-urgent">Please choose one size estimate.</p>
-                <label for="note" class="mt-5 block text-sm font-bold text-body">Anything specific we should know?</label>
-                <input id="note" type="text" placeholder="e.g. 3rd floor, no elevator, oversized couch..." class="mt-2 min-h-[44px] w-full rounded-lg border border-line px-4 outline-none focus:border-cta">
-                <div class="mt-6 grid gap-3 sm:grid-cols-2">
-                  <button type="button" class="back-btn btn border border-navy px-5 text-navy hover:bg-navy hover:text-white">← Back</button>
-                  <button type="button" class="next-btn btn bg-cta px-5 text-white hover:bg-ctaDark">Next: Your contact info →</button>
+                <p class="error mt-3 hidden text-urgent" style="font-size:14px;font-weight:600;">Please choose one size estimate.</p>
+                <label for="note" class="mt-5 block text-body" style="font-size:14px;font-weight:700;">Anything specific we should know?</label>
+                <input id="note" type="text" placeholder="e.g. 3rd floor, no elevator, oversized couch..." class="focus:border-cta mt-2 w-full rounded-lg border border-line px-4 outline-none" style="min-height:44px;">
+                <div class="mt-6 grid gap-3" style="grid-template-columns:1fr 1fr;">
+                  <button type="button" class="back-btn btn border border-navy text-navy hover:bg-navy hover:text-white px-5">← Back</button>
+                  <button type="button" class="next-btn btn bg-cta hover:bg-ctaDark px-5" style="color:#fff;">Next: Contact info →</button>
                 </div>
               </section>
 
+              <!-- STEP 3 -->
               <section class="step-panel hidden" data-step="3">
-                <h3 class="text-2xl font-bold text-navy">Where should we send your quote?</h3>
-                <label class="mt-4 block text-sm font-bold text-body">Almost done! How should we reach you?</label>
+                <h3 class="text-navy" style="font-size:1.4rem;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;">Where should we send your quote?</h3>
+                <label class="mt-4 block text-body" style="font-size:14px;font-weight:700;">Almost done! How should we reach you?</label>
                 <div class="mt-4 grid gap-4">
-                  <input id="firstName" required type="text" placeholder="Your first name" class="min-h-[44px] rounded-lg border border-line px-4 outline-none focus:border-cta">
+                  <input id="firstName" required type="text" placeholder="Your first name" class="focus:border-cta rounded-lg border border-line px-4 outline-none" style="min-height:44px;">
                   <div>
-                    <input id="phone" required type="tel" placeholder="424-xxx-xxxx" class="min-h-[44px] w-full rounded-lg border border-line px-4 outline-none focus:border-cta">
-                    <p class="mt-1 text-xs text-muted">📱 We'll text your quote — fastest way to hear back</p>
+                    <input id="phone" required type="tel" placeholder="424-xxx-xxxx" class="focus:border-cta w-full rounded-lg border border-line px-4 outline-none" style="min-height:44px;">
+                    <p class="mt-1" style="font-size:12px;color:#9CA3AF;">📱 We'll text your quote — fastest way to hear back</p>
                   </div>
                   <div>
-                    <input id="email" type="email" placeholder="your@email.com" class="min-h-[44px] w-full rounded-lg border border-line px-4 outline-none focus:border-cta">
-                    <p class="mt-1 text-xs text-muted">Optional — for a written copy</p>
+                    <input id="email" type="email" placeholder="your@email.com" class="focus:border-cta w-full rounded-lg border border-line px-4 outline-none" style="min-height:44px;">
+                    <p class="mt-1" style="font-size:12px;color:#9CA3AF;">Optional — for a written copy</p>
                   </div>
                 </div>
-                <div class="mt-5 flex flex-col gap-3 text-sm font-semibold text-body sm:flex-row sm:items-center">
-                  <label class="flex min-h-[44px] items-center gap-2"><input name="contactPref" type="radio" value="Text me" checked> Text me</label>
-                  <label class="flex min-h-[44px] items-center gap-2"><input name="contactPref" type="radio" value="Call me"> Call me</label>
-                  <label class="flex min-h-[44px] items-center gap-2"><input name="contactPref" type="radio" value="Either works"> Either works</label>
+                <div class="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center" style="font-size:14px;font-weight:600;color:#1F2937;">
+                  <label class="flex items-center gap-2" style="min-height:44px;"><input name="contactPref" type="radio" value="Text me" checked> Text me</label>
+                  <label class="flex items-center gap-2" style="min-height:44px;"><input name="contactPref" type="radio" value="Call me"> Call me</label>
+                  <label class="flex items-center gap-2" style="min-height:44px;"><input name="contactPref" type="radio" value="Either works"> Either works</label>
                 </div>
-                <p class="mt-3 text-sm text-[#9CA3AF]">No spam. No sales calls. Just your quote.</p>
-                <div class="mt-6 grid gap-3 sm:grid-cols-2">
-                  <button type="button" class="back-btn btn border border-navy px-5 text-navy hover:bg-navy hover:text-white">← Back</button>
-                  <button type="submit" class="btn bg-cta px-5 text-white hover:bg-ctaDark">Send My Request →</button>
+                <p class="mt-3" style="font-size:14px;color:#9CA3AF;">No spam. No sales calls. Just your quote.</p>
+                <div class="mt-6 grid gap-3" style="grid-template-columns:1fr 1fr;">
+                  <button type="button" class="back-btn btn border border-navy text-navy hover:bg-navy hover:text-white px-5">← Back</button>
+                  <button type="submit" class="btn bg-cta hover:bg-ctaDark px-5" style="color:#fff;">Send My Request →</button>
                 </div>
               </section>
             </form>
           </div>
+
           <div id="successState" class="hidden py-12 text-center">
-            <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-mint text-5xl">✅</div>
-            <h2 id="successTitle" class="mt-6 text-3xl font-bold text-navy">You're all set!</h2>
-            <p class="mt-3 text-lg text-muted">We'll text you a quote within 15 minutes.</p>
-            <p class="mt-4 font-semibold text-navy">Questions? Call or text us now: <a class="text-urgent" href="tel:4243606135">424-360-6135</a></p>
+            <div class="mx-auto flex items-center justify-center rounded-full bg-mint" style="height:80px;width:80px;font-size:3rem;">✅</div>
+            <h2 id="successTitle" class="mt-6 text-navy" style="font-size:1.875rem;font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;">You're all set!</h2>
+            <p class="mt-3 text-muted" style="font-size:1.1rem;">We'll text you a quote within 15 minutes.</p>
+            <p class="mt-4 text-navy" style="font-weight:600;">Questions? Call or text us now: <a class="text-urgent" href="tel:4243606135">424-360-6135</a></p>
           </div>
         </div>
+
       </div>
     </section>
 
-    <section class="section-pad bg-soft">
-      <div class="container-pad">
-        <div class="mx-auto max-w-3xl text-center">
-          <h2 class="text-3xl font-bold text-navy md:text-4xl">How It Works</h2>
-          <p class="mt-4 text-lg text-muted">A cleaner space is four simple steps away.</p>
-        </div>
-        <div class="mt-10 grid gap-4 md:grid-cols-4">
-          <article class="card yellow-card p-6"><div class="text-3xl">📸</div><h3 class="mt-3 text-lg font-bold text-navy">Snap & Send</h3><p class="mt-2 text-sm text-muted">Take a few photos of your junk and text them to 424-360-6135. Takes 30 seconds.</p></article>
-          <article class="card blue-card p-6"><div class="text-3xl">💬</div><h3 class="mt-3 text-lg font-bold text-navy">Get Your Quote</h3><p class="mt-2 text-sm text-muted">We reply fast with an honest, upfront price. No pressure, no hidden fees.</p></article>
-          <article class="card yellow-card p-6"><div class="text-3xl">📅</div><h3 class="mt-3 text-lg font-bold text-navy">Pick Your Time</h3><p class="mt-2 text-sm text-muted">Same-day, next-day, or whenever works for you. We work around your schedule.</p></article>
-          <article class="card blue-card p-6"><div class="text-3xl">✅</div><h3 class="mt-3 text-lg font-bold text-navy">We Haul & Clean</h3><p class="mt-2 text-sm text-muted">Our crew lifts everything, loads the truck, and leaves your space spotless.</p></article>
-        </div>
-      </div>
-    </section>
-
+    <!-- REVIEWS -->
     <section id="reviews" class="section-pad bg-white">
       <div class="container-pad">
         <div class="mx-auto max-w-3xl text-center">
-          <h2 class="text-3xl font-bold text-navy md:text-4xl">What Our Customers Say</h2>
-          <p class="mt-4 text-lg text-muted">5.0 ⭐ on Google · 17 verified reviews</p>
+          <h2 class="text-navy" style="font-size:clamp(1.75rem,3vw,2.25rem);font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;">What Our Customers Say</h2>
+          <p class="mt-4 text-muted" style="font-size:1.1rem;">5.0 ⭐ on Google · 17 verified reviews</p>
         </div>
         <div class="mt-10 grid gap-5 md:grid-cols-3">
-          <article class="card p-6"><p class="text-amber">★★★★★</p><h3 class="mt-4 font-bold text-navy">Yan Simões</h3><p class="text-sm text-muted">5 reviews · 19 photos</p><p class="mt-4 text-muted">"I highly recommend South Bay Junk Removal. My family recently lost a close relative, and we needed help clearing out an entire home during a very difficult time..."</p></article>
-          <article class="card p-6"><p class="text-amber">★★★★★</p><h3 class="mt-4 font-bold text-navy">Bella</h3><p class="text-sm text-muted">1 month ago</p><p class="mt-4 text-muted">"I cannot recommend these two guys highly enough! They recently came to clean my in-laws' home, which had accumulated 15 years' worth of belongings..."</p></article>
-          <article class="card p-6"><p class="text-amber">★★★★★</p><h3 class="mt-4 font-bold text-navy">Caio Gesualdi</h3><p class="text-sm text-muted">3 weeks ago</p><p class="mt-4 text-muted">"Fantastic service, on time and very professional. Cleared everything we needed quickly and left the place spotless. Highly recommend for anyone in the South Bay area..."</p></article>
+          <article class="card p-6">
+            <p style="color:#FBBF24;font-size:1.1rem;">★★★★★</p>
+            <h3 class="mt-4 text-navy" style="font-weight:700;">Yan Simões</h3>
+            <p class="text-muted" style="font-size:13px;">5 reviews · 19 photos</p>
+            <p class="mt-4 text-muted" style="font-size:14px;line-height:1.7;">"I highly recommend South Bay Junk Removal. My family recently lost a close relative, and we needed help clearing out an entire home during a very difficult time. Their team made the entire process smooth, respectful, and stress-free."</p>
+          </article>
+          <article class="card p-6">
+            <p style="color:#FBBF24;font-size:1.1rem;">★★★★★</p>
+            <h3 class="mt-4 text-navy" style="font-weight:700;">Bella</h3>
+            <p class="text-muted" style="font-size:13px;">1 month ago</p>
+            <p class="mt-4 text-muted" style="font-size:14px;line-height:1.7;">"I cannot recommend these two guys highly enough! They came to clean my in-laws' home, which had accumulated 15 years' worth of belongings. They managed to clear and clean the entire space in just 3 to 4 hours."</p>
+          </article>
+          <article class="card p-6">
+            <p style="color:#FBBF24;font-size:1.1rem;">★★★★★</p>
+            <h3 class="mt-4 text-navy" style="font-weight:700;">Caio Gesualdi</h3>
+            <p class="text-muted" style="font-size:13px;">3 weeks ago</p>
+            <p class="mt-4 text-muted" style="font-size:14px;line-height:1.7;">"Fantastic service, on time and very professional. Cleared everything we needed quickly and left the place spotless. Highly recommend for anyone in the South Bay area."</p>
+          </article>
         </div>
         <div class="mt-9 text-center">
-          <a href="https://www.google.com/maps/search/?api=1&query=South%20Bay%20Junk%20Removal" target="_blank" rel="noopener" class="btn bg-cta px-6 text-white hover:bg-ctaDark">See All Reviews on Google →</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=South%20Bay%20Junk%20Removal" target="_blank" rel="noopener" class="btn bg-cta hover:bg-ctaDark px-6" style="color:#fff;">See All Reviews on Google →</a>
         </div>
       </div>
     </section>
 
+    <!-- SERVICES -->
     <section id="services" class="section-pad bg-soft">
       <div class="container-pad">
         <div class="mx-auto max-w-3xl text-center">
-          <h2 class="text-3xl font-bold text-navy md:text-4xl">What We Haul Away</h2>
-          <p class="mt-4 text-lg text-muted">If you can point to it, we can take it.</p>
+          <h2 class="text-navy" style="font-size:clamp(1.75rem,3vw,2.25rem);font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;">What We Haul Away</h2>
+          <p class="mt-4 text-muted" style="font-size:1.1rem;">If you can point to it, we can take it.</p>
         </div>
-        <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <article class="card p-5 hover:bg-mint"><div class="text-3xl">🛋️</div><h3 class="mt-3 font-bold text-navy">Furniture Removal</h3><p class="mt-1 text-sm text-muted">Couches, tables, chairs, dressers</p></article>
-          <article class="card p-5 hover:bg-mint"><div class="text-3xl">🧊</div><h3 class="mt-3 font-bold text-navy">Appliance Removal</h3><p class="mt-1 text-sm text-muted">Fridges, washers, dryers, stoves</p></article>
-          <article class="card p-5 hover:bg-mint"><div class="text-3xl">🏠</div><h3 class="mt-3 font-bold text-navy">Garage Cleanouts</h3><p class="mt-1 text-sm text-muted">Full garage cleared, sorted, and hauled</p></article>
-          <article class="card p-5 hover:bg-mint"><div class="text-3xl">🌿</div><h3 class="mt-3 font-bold text-navy">Yard Waste</h3><p class="mt-1 text-sm text-muted">Branches, soil, green waste removed</p></article>
-          <article class="card p-5 hover:bg-mint"><div class="text-3xl">🛏️</div><h3 class="mt-3 font-bold text-navy">Mattress Removal</h3><p class="mt-1 text-sm text-muted">Any size, same-day pickup available</p></article>
-          <article class="card p-5 hover:bg-mint"><div class="text-3xl">🔨</div><h3 class="mt-3 font-bold text-navy">Construction Debris</h3><p class="mt-1 text-sm text-muted">Drywall, lumber, concrete, tiles</p></article>
-          <article class="card p-5 hover:bg-mint"><div class="text-3xl">💼</div><h3 class="mt-3 font-bold text-navy">Office Junk</h3><p class="mt-1 text-sm text-muted">Desks, electronics, office clutter</p></article>
-          <article class="card p-5 hover:bg-mint"><div class="text-3xl">📦</div><h3 class="mt-3 font-bold text-navy">Household Junk</h3><p class="mt-1 text-sm text-muted">General clutter and old items</p></article>
+        <div class="mt-10 grid gap-4" style="grid-template-columns:repeat(2,1fr);">
+          <article class="card hover:bg-mint p-5"><div style="font-size:2rem;">🛋️</div><h3 class="mt-3 text-navy" style="font-weight:700;">Furniture Removal</h3><p class="mt-1 text-muted" style="font-size:14px;">Couches, tables, chairs, dressers</p></article>
+          <article class="card hover:bg-mint p-5"><div style="font-size:2rem;">🧊</div><h3 class="mt-3 text-navy" style="font-weight:700;">Appliance Removal</h3><p class="mt-1 text-muted" style="font-size:14px;">Fridges, washers, dryers, stoves</p></article>
+          <article class="card hover:bg-mint p-5"><div style="font-size:2rem;">🏠</div><h3 class="mt-3 text-navy" style="font-weight:700;">Garage Cleanouts</h3><p class="mt-1 text-muted" style="font-size:14px;">Full garage cleared, sorted, and hauled</p></article>
+          <article class="card hover:bg-mint p-5"><div style="font-size:2rem;">🌿</div><h3 class="mt-3 text-navy" style="font-weight:700;">Yard Waste</h3><p class="mt-1 text-muted" style="font-size:14px;">Branches, soil, green waste removed</p></article>
+          <article class="card hover:bg-mint p-5"><div style="font-size:2rem;">🛏️</div><h3 class="mt-3 text-navy" style="font-weight:700;">Mattress Removal</h3><p class="mt-1 text-muted" style="font-size:14px;">Any size, same-day pickup available</p></article>
+          <article class="card hover:bg-mint p-5"><div style="font-size:2rem;">🔨</div><h3 class="mt-3 text-navy" style="font-weight:700;">Construction Debris</h3><p class="mt-1 text-muted" style="font-size:14px;">Drywall, lumber, concrete, tiles</p></article>
+          <article class="card hover:bg-mint p-5"><div style="font-size:2rem;">💼</div><h3 class="mt-3 text-navy" style="font-weight:700;">Office Junk</h3><p class="mt-1 text-muted" style="font-size:14px;">Desks, electronics, office clutter</p></article>
+          <article class="card hover:bg-mint p-5"><div style="font-size:2rem;">📦</div><h3 class="mt-3 text-navy" style="font-weight:700;">Household Junk</h3><p class="mt-1 text-muted" style="font-size:14px;">General clutter and old items</p></article>
         </div>
       </div>
     </section>
 
+    <!-- ECO -->
     <section class="section-pad bg-mint">
-      <div class="container-pad max-w-[760px] text-center">
-        <h2 class="text-3xl font-bold text-navy md:text-4xl">We Treat Your Home — and the Planet — With Care.</h2>
-        <p class="mt-5 text-lg leading-8 text-muted">We don't just dump everything. Our team sorts each job: gently used furniture goes to local South Bay charities, electronics are properly recycled, and yard waste is composted. We recycle or donate up to 60% of every load.</p>
+      <div class="container-pad text-center" style="max-width:760px;">
+        <h2 class="text-navy" style="font-size:clamp(1.75rem,3vw,2.25rem);font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;">We Treat Your Home — and the Planet — With Care.</h2>
+        <p class="mt-5 text-muted" style="font-size:1.1rem;line-height:1.8;">We don't just dump everything. Our team sorts each job: gently used furniture goes to local South Bay charities, electronics are properly recycled, and yard waste is composted. We recycle or donate up to 60% of every load.</p>
         <div class="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
-          <span class="rounded-full border border-[#BBF7D0] bg-white px-4 py-2 text-sm font-bold text-navy">♻️ Recycle First</span>
-          <span class="rounded-full border border-[#BBF7D0] bg-white px-4 py-2 text-sm font-bold text-navy">🤝 Donate Locally</span>
-          <span class="rounded-full border border-[#BBF7D0] bg-white px-4 py-2 text-sm font-bold text-navy">🌱 Responsible Disposal</span>
+          <span class="rounded-full border bg-white px-4 py-2 text-navy" style="border-color:#BBF7D0;font-size:14px;font-weight:700;">♻️ Recycle First</span>
+          <span class="rounded-full border bg-white px-4 py-2 text-navy" style="border-color:#BBF7D0;font-size:14px;font-weight:700;">🤝 Donate Locally</span>
+          <span class="rounded-full border bg-white px-4 py-2 text-navy" style="border-color:#BBF7D0;font-size:14px;font-weight:700;">🌱 Responsible Disposal</span>
         </div>
       </div>
     </section>
 
+    <!-- AREAS -->
     <section id="areas" class="section-pad bg-soft">
       <div class="container-pad grid gap-8 md:grid-cols-2 md:items-center">
         <div>
-          <h2 class="text-3xl font-bold text-navy md:text-4xl">Proudly Serving Los Angeles & Orange County</h2>
+          <h2 class="text-navy" style="font-size:clamp(1.75rem,3vw,2.25rem);font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;">Proudly Serving Los Angeles &amp; Orange County</h2>
           <div class="mt-6 flex flex-wrap gap-3">
-            <span class="rounded-full bg-navy px-5 py-2 text-sm font-bold text-white">Los Angeles</span>
-            <span class="rounded-full bg-navy px-5 py-2 text-sm font-bold text-white">South Bay</span>
-            <span class="rounded-full bg-navy px-5 py-2 text-sm font-bold text-white">Orange County</span>
+            <span class="rounded-full bg-navy px-5 py-2 text-white" style="font-size:14px;font-weight:700;">Los Angeles</span>
+            <span class="rounded-full bg-navy px-5 py-2 text-white" style="font-size:14px;font-weight:700;">South Bay</span>
+            <span class="rounded-full bg-navy px-5 py-2 text-white" style="font-size:14px;font-weight:700;">Orange County</span>
           </div>
-          <div class="mt-7 grid gap-x-5 gap-y-2 text-muted sm:grid-cols-3">
-            <span>Torrance</span><span>Redondo Beach</span><span>Manhattan Beach</span><span>Hawthorne</span><span>Inglewood</span><span>Santa Monica</span><span>Culver City</span><span>El Segundo</span><span>Hermosa Beach</span><span>Lawndale</span><span>Gardena</span><span>Carson</span><span>Long Beach</span><span>Palos Verdes</span><span>Anaheim</span><span>Irvine</span><span>Santa Ana</span>
+          <div class="mt-7 grid gap-x-5 gap-y-2 text-muted" style="grid-template-columns:repeat(3,1fr);font-size:14px;">
+            <span>Torrance</span><span>Redondo Beach</span><span>Manhattan Beach</span>
+            <span>Hawthorne</span><span>Inglewood</span><span>Santa Monica</span>
+            <span>Culver City</span><span>El Segundo</span><span>Hermosa Beach</span>
+            <span>Lawndale</span><span>Gardena</span><span>Carson</span>
+            <span>Long Beach</span><span>Palos Verdes</span><span>Anaheim</span>
+            <span>Irvine</span><span>Santa Ana</span>
           </div>
         </div>
         <iframe title="Map of South Bay, CA service area" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d105504.16!2d-118.3831!3d33.8358!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2b04b4d1c1f6d%3A0x8f33d56afc29985!2sSouth%20Bay%2C%20CA!5e0!3m2!1sen!2sus!4v1" width="100%" height="360" style="border:0;border-radius:12px;" allowfullscreen loading="lazy"></iframe>
       </div>
     </section>
 
+    <!-- FAQ -->
     <section id="faq" class="section-pad bg-white">
-      <div class="container-pad max-w-[860px]">
-        <h2 class="text-center text-3xl font-bold text-navy md:text-4xl">Got Questions? We've Got Answers.</h2>
-        <div class="mt-10 divide-y divide-line rounded-[12px] border border-line bg-white">
-          <article class="faq-item">
-            <button class="faq-question flex min-h-[64px] w-full items-center justify-between gap-4 px-5 text-left font-bold text-navy"><span>How much does junk removal cost?</span><span class="faq-icon text-2xl">+</span></button>
-            <div class="faq-answer px-5"><p class="pb-5 text-muted">We charge based on truck space used, starting at just $50 for a single item. A full truckload runs $550-$800. The easiest way to get an exact price is to text us photos — we'll quote you in minutes.</p></div>
+      <div class="container-pad" style="max-width:860px;">
+        <h2 class="text-center text-navy" style="font-size:clamp(1.75rem,3vw,2.25rem);font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;">Got Questions? We've Got Answers.</h2>
+        <div class="mt-10 rounded-xl border border-line bg-white" style="overflow:hidden;">
+          <article class="faq-item" style="border-bottom:1px solid #E5E7EB;">
+            <button class="faq-question flex w-full items-center justify-between gap-4 px-5 text-left text-navy" style="min-height:64px;font-weight:700;background:none;border:none;cursor:pointer;"><span>How much does junk removal cost?</span><span class="faq-icon" style="font-size:1.5rem;">+</span></button>
+            <div class="faq-answer px-5"><p class="pb-5 text-muted" style="font-size:15px;">We charge based on truck space used, starting at just $50 for a single item. A full truckload runs $550–$800. The easiest way to get an exact price is to text us photos — we'll quote you in minutes.</p></div>
+          </article>
+          <article class="faq-item" style="border-bottom:1px solid #E5E7EB;">
+            <button class="faq-question flex w-full items-center justify-between gap-4 px-5 text-left text-navy" style="min-height:64px;font-weight:700;background:none;border:none;cursor:pointer;"><span>Do you offer same-day service?</span><span class="faq-icon" style="font-size:1.5rem;">+</span></button>
+            <div class="faq-answer px-5"><p class="pb-5 text-muted" style="font-size:15px;">Yes! We offer same-day service based on availability. Text or call us early in the day for the best chance of same-day pickup.</p></div>
+          </article>
+          <article class="faq-item" style="border-bottom:1px solid #E5E7EB;">
+            <button class="faq-question flex w-full items-center justify-between gap-4 px-5 text-left text-navy" style="min-height:64px;font-weight:700;background:none;border:none;cursor:pointer;"><span>What items do you take?</span><span class="faq-icon" style="font-size:1.5rem;">+</span></button>
+            <div class="faq-answer px-5"><p class="pb-5 text-muted" style="font-size:15px;">Almost everything — furniture, appliances, mattresses, yard waste, construction debris, electronics, office equipment, and general household clutter. Call us if you're unsure about a specific item.</p></div>
+          </article>
+          <article class="faq-item" style="border-bottom:1px solid #E5E7EB;">
+            <button class="faq-question flex w-full items-center justify-between gap-4 px-5 text-left text-navy" style="min-height:64px;font-weight:700;background:none;border:none;cursor:pointer;"><span>Do I need to bring my junk to the curb?</span><span class="faq-icon" style="font-size:1.5rem;">+</span></button>
+            <div class="faq-answer px-5"><p class="pb-5 text-muted" style="font-size:15px;">Absolutely not. Our crew comes inside, lifts everything, and loads it onto the truck. You don't have to move a single thing.</p></div>
           </article>
           <article class="faq-item">
-            <button class="faq-question flex min-h-[64px] w-full items-center justify-between gap-4 px-5 text-left font-bold text-navy"><span>Do you offer same-day service?</span><span class="faq-icon text-2xl">+</span></button>
-            <div class="faq-answer px-5"><p class="pb-5 text-muted">Yes! We offer same-day service based on availability. Text or call us early in the day for the best chance of same-day pickup.</p></div>
-          </article>
-          <article class="faq-item">
-            <button class="faq-question flex min-h-[64px] w-full items-center justify-between gap-4 px-5 text-left font-bold text-navy"><span>What items do you take?</span><span class="faq-icon text-2xl">+</span></button>
-            <div class="faq-answer px-5"><p class="pb-5 text-muted">Almost everything — furniture, appliances, mattresses, yard waste, construction debris, electronics, office equipment, and general household clutter. Call us if you're unsure about a specific item.</p></div>
-          </article>
-          <article class="faq-item">
-            <button class="faq-question flex min-h-[64px] w-full items-center justify-between gap-4 px-5 text-left font-bold text-navy"><span>Do I need to bring my junk to the curb?</span><span class="faq-icon text-2xl">+</span></button>
-            <div class="faq-answer px-5"><p class="pb-5 text-muted">Absolutely not. Our crew comes inside, lifts everything, and loads it onto the truck. You don't have to move a single thing.</p></div>
-          </article>
-          <article class="faq-item">
-            <button class="faq-question flex min-h-[64px] w-full items-center justify-between gap-4 px-5 text-left font-bold text-navy"><span>Are you licensed and insured?</span><span class="faq-icon text-2xl">+</span></button>
-            <div class="faq-answer px-5"><p class="pb-5 text-muted">Yes. South Bay Junk Removal is fully licensed and insured. We're a family-owned local business and we stand behind every job we do.</p></div>
+            <button class="faq-question flex w-full items-center justify-between gap-4 px-5 text-left text-navy" style="min-height:64px;font-weight:700;background:none;border:none;cursor:pointer;"><span>Are you licensed and insured?</span><span class="faq-icon" style="font-size:1.5rem;">+</span></button>
+            <div class="faq-answer px-5"><p class="pb-5 text-muted" style="font-size:15px;">Yes. South Bay Junk Removal is fully licensed and insured. We're a family-owned local business and we stand behind every job we do.</p></div>
           </article>
         </div>
       </div>
     </section>
+
   </main>
 
+  <!-- FOOTER -->
   <footer class="bg-navy text-white">
     <div class="container-pad grid gap-8 py-12 md:grid-cols-3">
       <div>
-        <div class="flex items-center gap-2 text-lg font-bold"><span>🗑️</span><span>South Bay Junk Removal</span></div>
-        <p class="mt-4 font-semibold">Fast. Honest. Local.</p>
-        <p class="mt-2 text-sm text-[#9CA3AF]">Serving Los Angeles & Orange County since day one.</p>
+        <div class="flex items-center gap-2" style="font-size:1.1rem;font-weight:700;">🗑️ South Bay Junk Removal</div>
+        <p class="mt-4" style="font-weight:600;">Fast. Honest. Local.</p>
+        <p class="mt-2" style="font-size:14px;color:#9CA3AF;">Serving Los Angeles &amp; Orange County since day one.</p>
       </div>
       <div>
-        <h3 class="font-bold">Quick Links</h3>
-        <nav class="mt-4 grid gap-2 text-sm text-[#D1D5DB]">
-          <a href="#services">Services</a>
-          <a href="#pricing">Pricing</a>
-          <a href="#top">How It Works</a>
-          <a href="#areas">Areas</a>
-          <a href="#faq">FAQ</a>
-          <a href="#quote">Get a Quote</a>
+        <h3 style="font-weight:700;">Quick Links</h3>
+        <nav class="mt-4 grid gap-2" style="font-size:14px;color:#D1D5DB;">
+          <a href="#services" style="color:#D1D5DB;">Services</a>
+          <a href="#pricing" style="color:#D1D5DB;">Pricing</a>
+          <a href="#reviews" style="color:#D1D5DB;">Reviews</a>
+          <a href="#areas" style="color:#D1D5DB;">Areas</a>
+          <a href="#faq" style="color:#D1D5DB;">FAQ</a>
+          <a href="#quote" style="color:#D1D5DB;">Get a Quote</a>
         </nav>
       </div>
       <div>
-        <h3 class="font-bold">Contact</h3>
-        <div class="mt-4 grid gap-2 text-sm text-[#D1D5DB]">
-          <a class="text-white" href="tel:4243606135">📞 424-360-6135</a>
-          <a href="mailto:junksbremoval@gmail.com">📧 junksbremoval@gmail.com</a>
-          <a href="sms:4243606135">📱 Text Us Photos: 424-360-6135</a>
+        <h3 style="font-weight:700;">Contact</h3>
+        <div class="mt-4 grid gap-2" style="font-size:14px;color:#D1D5DB;">
+          <a href="tel:4243606135" style="color:#fff;font-weight:600;">📞 424-360-6135</a>
+          <a href="mailto:junksbremoval@gmail.com" style="color:#D1D5DB;">📧 junksbremoval@gmail.com</a>
+          <a href="sms:4243606135" style="color:#D1D5DB;">📱 Text Us Photos: 424-360-6135</a>
         </div>
       </div>
     </div>
-    <div class="border-t border-white/10 py-5 text-center text-sm text-[#9CA3AF]">© 2026 South Bay Junk Removal. All rights reserved. Licensed & Insured · Family Owned · South Bay, CA</div>
+    <div class="py-5 text-center" style="border-top:1px solid rgba(255,255,255,0.1);font-size:14px;color:#9CA3AF;">
+      © 2026 South Bay Junk Removal. All rights reserved. Licensed &amp; Insured · Family Owned · South Bay, CA
+    </div>
   </footer>
 
   <script>
+    // Nav scroll shadow
     const nav = document.querySelector('.nav');
-    const menuBtn = document.getElementById('menuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const formState = { items: [], volume: '', note: '', name: '', phone: '', email: '', contact_pref: 'Text me' };
-    let currentStep = 1;
-
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 60);
     });
 
+    // Mobile menu
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
     menuBtn.addEventListener('click', () => {
       const isOpen = !mobileMenu.classList.contains('hidden');
       mobileMenu.classList.toggle('hidden');
       menuBtn.setAttribute('aria-expanded', String(!isOpen));
     });
 
+    // Smooth scroll + close menu on link click
     document.querySelectorAll('a[href^="#"]').forEach(link => {
       link.addEventListener('click', event => {
         const target = document.querySelector(link.getAttribute('href'));
@@ -448,9 +620,16 @@
       });
     });
 
+    // Multi-step form
+    const formState = { items: [], volume: '', note: '', name: '', phone: '', email: '', contact_pref: 'Text me' };
+    let currentStep = 1;
+
     function updateProgress() {
       document.querySelectorAll('[data-step]').forEach(panel => {
         panel.classList.toggle('hidden', Number(panel.dataset.step) !== currentStep);
+        if (Number(panel.dataset.step) === currentStep) {
+          panel.classList.remove('hidden');
+        }
       });
       document.getElementById('stepLabel').textContent = `Step ${currentStep} of 3`;
       document.getElementById('progressBar').style.width = `${currentStep * 33.333}%`;
@@ -460,46 +639,37 @@
       const panel = document.querySelector(`[data-step="${step}"]`);
       const error = panel.querySelector('.error');
       if (error) error.classList.add('hidden');
-
       if (step === 1) {
-        formState.items = Array.from(document.querySelectorAll('.item-choice:checked')).map(input => input.value);
-        if (!formState.items.length) {
-          error.classList.remove('hidden');
-          return false;
-        }
+        formState.items = Array.from(document.querySelectorAll('.item-choice:checked')).map(i => i.value);
+        if (!formState.items.length) { if(error) error.classList.remove('hidden'); return false; }
       }
-
       if (step === 2) {
-        const selectedVolume = document.querySelector('.volume-choice:checked');
-        if (!selectedVolume) {
-          error.classList.remove('hidden');
-          return false;
-        }
-        formState.volume = selectedVolume.value;
+        const sel = document.querySelector('.volume-choice:checked');
+        if (!sel) { if(error) error.classList.remove('hidden'); return false; }
+        formState.volume = sel.value;
         formState.note = document.getElementById('note').value.trim();
       }
-
       return true;
     }
 
-    document.querySelectorAll('.next-btn').forEach(button => {
-      button.addEventListener('click', () => {
+    document.querySelectorAll('.next-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
         if (!validateStep(currentStep)) return;
         currentStep = Math.min(3, currentStep + 1);
         updateProgress();
       });
     });
 
-    document.querySelectorAll('.back-btn').forEach(button => {
-      button.addEventListener('click', () => {
+    document.querySelectorAll('.back-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
         currentStep = Math.max(1, currentStep - 1);
         updateProgress();
       });
     });
 
-    document.getElementById('quoteForm').addEventListener('submit', event => {
-      event.preventDefault();
-      if (!event.currentTarget.reportValidity()) return;
+    document.getElementById('quoteForm').addEventListener('submit', e => {
+      e.preventDefault();
+      if (!e.currentTarget.reportValidity()) return;
       formState.name = document.getElementById('firstName').value.trim();
       formState.phone = document.getElementById('phone').value.trim();
       formState.email = document.getElementById('email').value.trim();
@@ -509,9 +679,34 @@
       document.getElementById('successState').classList.remove('hidden');
     });
 
-    document.querySelectorAll('.faq-question').forEach(button => {
-      button.addEventListener('click', () => {
-        button.closest('.faq-item').classList.toggle('open');
+    // FAQ accordion
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.closest('.faq-item').classList.toggle('open');
+      });
+    });
+
+    // Choice card visual feedback (works without peer in Tailwind 2)
+    document.querySelectorAll('.choice-input').forEach(input => {
+      input.addEventListener('change', () => {
+        // For radio groups, reset all in same group first
+        if (input.type === 'radio') {
+          document.querySelectorAll(`input[name="${input.name}"]`).forEach(r => {
+            r.nextElementSibling.style.borderColor = '#E5E7EB';
+            r.nextElementSibling.style.background = '#fff';
+            r.nextElementSibling.style.boxShadow = 'none';
+          });
+        }
+        const card = input.nextElementSibling;
+        if (input.checked) {
+          card.style.borderColor = '#16A34A';
+          card.style.background = '#F0FDF4';
+          card.style.boxShadow = '0 0 0 1px #16A34A';
+        } else {
+          card.style.borderColor = '#E5E7EB';
+          card.style.background = '#fff';
+          card.style.boxShadow = 'none';
+        }
       });
     });
   </script>
