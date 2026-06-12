@@ -137,10 +137,10 @@
     .pricing-card.featured { background:linear-gradient(180deg, rgba(255,248,238,.94), rgba(243,229,216,.88)); border-color:rgba(227,154,73,.72); transform:translateY(-14px); }
     .pricing-card.featured:hover { transform:translateY(-20px) rotateX(2deg); }
     .pricing-label { font-size:12px; font-weight:800; text-transform:uppercase; color:var(--muted); letter-spacing:.16em; }
-    .pricing-price { margin-top:18px; font-size:clamp(2rem,3.2vw,3rem); font-weight:800; line-height:1.05; color:var(--brown); font-family:'Plus Jakarta Sans',sans-serif; white-space:nowrap; max-width:100%; overflow:hidden; }
+    .pricing-price { margin-top:18px; font-size:clamp(2.35rem,5.5vw,4.2rem); font-weight:800; line-height:1.05; color:var(--brown); font-family:'Plus Jakarta Sans',sans-serif; white-space:normal; overflow-wrap:anywhere; }
     .pricing-note { margin-top:22px; color:var(--muted); font-size:1rem; line-height:1.65; }
     .pricing-pill { display:inline-flex; align-items:center; border-radius:999px; padding:7px 15px; background:linear-gradient(135deg, var(--orange), var(--terracotta)); color:#fff; font-size:12px; font-weight:800; }
-    .pricing-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; padding:14px 8px 22px; }
+    .pricing-grid { display:grid; grid-template-columns:1fr; gap:14px; padding:14px 8px 22px; }
 
     /* FORM STEPS */
     .step-panel { animation: stepIn .25s ease both; }
@@ -185,14 +185,14 @@
     }
     .pricing-scroll { scrollbar-width:thin; }
     @media(min-width:768px){ .md-overflow-visible { overflow:visible; } }
-    @media(max-width:1023px){
+    @media(min-width:900px){
       .pricing-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .pricing-price { font-size:clamp(2.7rem,4.6vw,4rem); }
     }
     @media(max-width:767px){
       #work .card > div[style*="grid-template-columns"] { grid-template-columns:1fr !important; }
       #work img { height:210px !important; }
-      .pricing-grid { grid-template-columns:1fr; }
-      .pricing-price { font-size:clamp(2.2rem,13vw,3rem); }
+      .pricing-price { font-size:clamp(2.35rem,12vw,3.15rem); }
       .pricing-card.featured { transform:none; }
       .pricing-card.featured:hover { transform:translateY(-7px); }
     }
